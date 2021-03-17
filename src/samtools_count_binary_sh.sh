@@ -35,8 +35,10 @@ echo "${input_vcf_prefix}.vcf.gz"
 tabix -p vcf "${input_vcf_prefix}.vcf.gz"
 echo "${input_vcf_prefix}.vcf.gz.tbi"
 
-#java -jar picard.jar SortVcf I="${input_vcf_name}" O="${input_vcf_name}_sorted"
-#echo "${input_vcf_name}_sorted"
+apt-get update -y
+apt-get install -y default-jdk
+java -jar /usr/bin/picard.jar SortVcf I="${input_vcf_name}" O="${input_vcf_name}_sorted"
+echo "${input_vcf_name}_sorted"
 
 #dx upload "${input_vcf_prefix}.vcf.gz"
 #
@@ -54,6 +56,7 @@ echo "${gzip_file_id}"
 
 tbi_file_id=$(dx upload "${input_vcf_prefix}.vcf.gz.tbi" --brief)
 echo "${tbi_file_id}"
+
 
 #sorted_file_id=$(dx upload "${input_vcf_name}_sorted" --brief)
 #echo "${sorted_file_id}"
