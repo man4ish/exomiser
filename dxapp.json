@@ -1,0 +1,52 @@
+{
+  "name": "sort_index_vcf",
+  "title": "Sorting and Indexing VCF file",
+  "summary": "Index and sort vcf file",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "input_vcf",
+      "label": "vcf",
+      "class": "file",
+      "patterns": ["*.vcf"],
+      "help": "Vcf format file."
+    }
+  ],
+  "outputSpec": [
+    {
+      "name": "gzip_file",
+      "class": "file",
+      "label": "gzip file",
+      "patterns": [
+        "*.gz"
+      ],
+      "help": "Output gzip file."
+    },
+    {
+      "name": "tbi_file",
+      "class": "file",
+      "label": "index file",
+      "patterns": [
+        "*.tbi"
+      ],
+      "help": "Output index file."
+    }
+  ],
+  "runSpec": {
+    "interpreter": "bash",
+    "file": "src/samtools_count_binary_sh.sh",
+    "timeoutPolicy": {
+      "*": {
+        "hours": 3
+      }
+    },
+    "systemRequirements": {
+      "*": {
+        "instanceType": "azure:mem1_ssd1_x4"
+      }
+    },
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  }
+}
