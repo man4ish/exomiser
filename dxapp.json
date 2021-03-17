@@ -11,6 +11,13 @@
       "class": "file",
       "patterns": ["*.vcf"],
       "help": "Vcf format file."
+    },
+    {
+      "name": "dict_file",
+      "label": "dictionary",
+      "class": "file",
+      "patterns": ["*.dict"],
+      "help": "dict format file."
     }
   ],
   "outputSpec": [
