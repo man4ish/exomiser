@@ -36,7 +36,10 @@ echo "${ped_file_name}"
 apt-get update -y
 apt-get install -y default-jdk
 
-python exomiser_from_template.py -t "${exomiser_template_name}" -v "${family_vcf}" -p "Exomiser:/out/result" -o "${exomiser_yaml}" -b cmh003012-01 -d "${ped_file}"
+python3 src/exomiser_from_template.py -t "${exomiser_template_name}" -v "${family_vcf}" -p "Exomiser:/out/result" -o "${exomiser_yaml}" -b cmh003012-01 -d "${ped_file}"
+
+java -Xms8g -Xmx32g -jar /usr/bin/exomiser-cli-12.1.0.jar --analysis "${exomiser_yaml}" --spring.config.location=/usr/bin/b38.application.properties
+
 exomier_yaml_id=$(dx upload "${exomiser_yaml}" --brief)
 dx-jobutil-add-output exomier_yaml "${exomier_yaml_id}" --class=file
 
