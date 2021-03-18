@@ -8,8 +8,12 @@
 # containing the file_id of that file. By default, when we download a file,
 # we will keep the filename of the object on the platform.
 #
-dx download "${input_vcf}"
-dx download "${dict_file}"
+
+dx download "${exomiser_template}"
+dx download "${family_vcf}"
+dx download "${ped_file}"
+
+
 #
 # SECTION: Run samtools view
 # -----------------
@@ -24,19 +28,25 @@ dx download "${dict_file}"
 # In the case that the filename of the file mappings_bam is "my_mappings.bam",
 # mappings_bam_prefix will be "my_mappings"
 #
-echo "${dict_file_name}"
-echo "${input_vcf_name}"
+
+echo "${exomiser_template_name}"
+echo "${family_vcf_name}"
+echo "${ped_file_name}"
 
 apt-get update -y
 apt-get install -y default-jdk
-java -jar /usr/bin/picard.jar SortVcf SEQUENCE_DICTIONARY="${dict_file_name}" I="${input_vcf_name}" O="${input_vcf_prefix}_sorted.vcf"
-echo "${input_vcf_prefix}_sorted.vcf"
 
-bgzip -c "${input_vcf_prefix}_sorted.vcf" > "${input_vcf_prefix}_sorted.vcf.gz"
-echo "${input_vcf_prefix}_sorted.vcf.gz"
+python exomiser_from_template.py -t "${exomiser_template_name}" -v "${family_vcf}" -p "Exomiser:/out/result" -o "${exomiser_yaml}" -b cmh003012-01 -d "${ped_file}"
+exomier_yaml_id=$(dx upload "${exomiser_yaml}" --brief)
+dx-jobutil-add-output exomier_yaml "${exomier_yaml_id}" --class=file
 
-tabix -p vcf "${input_vcf_prefix}_sorted.vcf.gz"
-echo "${input_vcf_prefix}_sorted.vcf.gz.tbi"
+
+
+#bgzip -c "${input_vcf_prefix}_sorted.vcf" > "${input_vcf_prefix}_sorted.vcf.gz"
+#echo "${input_vcf_prefix}_sorted.vcf.gz"
+
+#tabix -p vcf "${input_vcf_prefix}_sorted.vcf.gz"
+#echo "${input_vcf_prefix}_sorted.vcf.gz.tbi"
 
 
 #dx upload "${input_vcf_prefix}.vcf.gz"
@@ -50,11 +60,11 @@ echo "${input_vcf_prefix}_sorted.vcf.gz.tbi"
 #
 #counts_txt_id=$(dx upload "${mappings_bam_prefix}.txt" --brief)
 
-gzip_file_id=$(dx upload "${input_vcf_prefix}_sorted.vcf.gz" --brief)
-echo "${gzip_file_id}"
+#gzip_file_id=$(dx upload "${input_vcf_prefix}_sorted.vcf.gz" --brief)
+#echo "${gzip_file_id}"
 
-tbi_file_id=$(dx upload "${input_vcf_prefix}_sorted.vcf.gz.tbi" --brief)
-echo "${tbi_file_id}"
+#tbi_file_id=$(dx upload "${input_vcf_prefix}_sorted.vcf.gz.tbi" --brief)
+#echo "${tbi_file_id}"
 
 
 #sorted_file_id=$(dx upload "${input_vcf_name}_sorted" --brief)
@@ -70,6 +80,6 @@ echo "${tbi_file_id}"
 #
 # dx-jobutil-add-output counts_txt "${counts_txt_id}" --class=file
 #
-dx-jobutil-add-output gzip_file "${gzip_file_id}" --class=file
-dx-jobutil-add-output tbi_file "${tbi_file_id}" --class=file
+#dx-jobutil-add-output gzip_file "${gzip_file_id}" --class=file
+#dx-jobutil-add-output tbi_file "${tbi_file_id}" --class=file
 #dx-jobutil-add-output sorted_file "${sorted_file_id}" --class=file

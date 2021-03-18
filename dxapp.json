@@ -1,48 +1,46 @@
 {
-  "name": "sort_index_vcf",
-  "title": "Sorting and Indexing VCF file",
-  "summary": "Index and sort vcf file",
+  "name": "exomiser",
+  "title": "exomiser",
+  "summary": "exomiser",
   "dxapi": "1.0.0",
   "version": "0.0.1",
   "inputSpec": [
     {
-      "name": "input_vcf",
-      "label": "vcf",
+      "name": "exomiser_template",
+      "label": "template",
       "class": "file",
-      "patterns": ["*.vcf"],
-      "help": "Vcf format file."
+      "patterns": ["*.template"],
+      "help": "template file."
     },
     {
-      "name": "dict_file",
-      "label": "dictionary",
+      "name": "family_vcf",
+      "label": "family vcf file",
       "class": "file",
-      "patterns": ["*.dict"],
-      "help": "dict format file."
+      "patterns": ["*.vcf"],
+      "help": "vcf format file."
+    },
+    {
+      "name": "ped_file",
+      "label": "ped file",
+      "class": "file",
+      "patterns": ["*.ped"],
+      "help": "ped format file."
     }
   ],
   "outputSpec": [
     {
-      "name": "gzip_file",
+      "name": "exomiser_yaml",
       "class": "file",
-      "label": "gzip file",
+      "label": "yaml file",
       "patterns": [
-        "*.gz"
+        "*.yaml"
       ],
-      "help": "Output gzip file."
-    },
-    {
-      "name": "tbi_file",
-      "class": "file",
-      "label": "index file",
-      "patterns": [
-        "*.tbi"
-      ],
-      "help": "Output index file."
+      "help": "Output yaml file."
     }
   ],
   "runSpec": {
     "interpreter": "bash",
-    "file": "src/samtools_count_binary_sh.sh",
+    "file": "src/exomiser_run.sh",
     "timeoutPolicy": {
       "*": {
         "hours": 3
