@@ -25,6 +25,20 @@
       "class": "file",
       "patterns": ["*.ped"],
       "help": "ped format file."
+    },
+    {
+      "name": "python_file",
+      "label": "python file",
+      "class": "file",
+      "patterns": ["*.py"],
+      "help": "python file."
+    },
+    {
+      "name": "prop_file",
+      "label": "properties file",
+      "class": "file",
+      "patterns": ["*.properties"],
+      "help": "properties file."
     }
   ],
   "outputSpec": [
