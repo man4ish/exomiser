@@ -33,15 +33,22 @@ dx download "${prop_file}"
 echo "${exomiser_template_name}"
 echo "${family_vcf_name}"
 echo "${ped_file_name}"
-
 echo "${python_file_name}"
-python3 "${python_file_name}" -t "${exomiser_template_name}" -v "${family_vcf}" -p "Exomiser:/out/result" -o "${family_vcf}.yaml" -b cmh003012-01 -d "${ped_file}"
-exomier_yaml_id=$(dx upload "${family_vcf}.yaml" --brief)
-dx-jobutil-add-output exomier_yaml "${exomier_yaml_id}" --class=file
+echo "${prop_file_name}"
 
-apt-get update -y
-apt-get install -y default-jdk
-java -Xms8g -Xmx32g -jar /usr/bin/exomiser-cli-12.1.0.jar --analysis "${family_vcf}.yaml" --spring.config.location="${prop_file_name}"
+echo "${python_file_name} -t ${exomiser_template_name} -v ${family_vcf_name} -p Exomiser:/out/result -o ${family_vcf_name}.yaml -b cmh003012-01 -d ${ped_file_name}"
+python3 "${python_file_name}" -t "${exomiser_template_name}" -v "${family_vcf_name}" -p "Exomiser:/out/result" -o "${family_vcf_name}.yaml" -b cmh003012-01 -d "${ped_file_name}"
+
+
+exomiser_yaml_id=$(dx upload "${family_vcf_name}.yaml" --brief)
+dx-jobutil-add-output exomiser_yaml "${exomiser_yaml_id}" --class=file
+
+#apt-get update -y
+#apt-get install -y default-jdk
+
+
+#echo "java -Xms8g -Xmx32g -jar /usr/bin/exomiser-cli-12.1.0.jar --analysis ${family_vcf_name}.yaml --spring.config.location=${prop_file_name}"
+#java -Xms8g -Xmx32g -jar /usr/bin/exomiser-cli-12.1.0.jar --analysis "${family_vcf_name}.yaml" --spring.config.location="${prop_file_name}"
 
 #bgzip -c "${input_vcf_prefix}_sorted.vcf" > "${input_vcf_prefix}_sorted.vcf.gz"
 #echo "${input_vcf_prefix}_sorted.vcf.gz"

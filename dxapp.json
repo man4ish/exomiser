@@ -6,6 +6,13 @@
   "version": "0.0.1",
   "inputSpec": [
     {
+      "name": "python_file",
+      "label": "python file",
+      "class": "file",
+      "patterns": ["*.py"],
+      "help": "python file."
+    },
+    {
       "name": "exomiser_template",
       "label": "template",
       "class": "file",
@@ -25,13 +32,6 @@
       "class": "file",
       "patterns": ["*.ped"],
       "help": "ped format file."
-    },
-    {
-      "name": "python_file",
-      "label": "python file",
-      "class": "file",
-      "patterns": ["*.py"],
-      "help": "python file."
     },
     {
       "name": "prop_file",

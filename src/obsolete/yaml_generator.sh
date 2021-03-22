@@ -1,2 +1,0 @@
-python /software/reboot-utils/current/bin/exomiser_from_template.py -t /software/reboot-utils/current/etc/exomiser_genome_template_b38.yml -v /analysis/projects/magnesium/GRCh38/dragen/cmh003012-01/exomiser/cmh003012-01_family.vcf.gz -s HP:0030692 -s HP:0000805 -s HP:0011968 -s HP:0001288 -s HP:0001257 -p /home/mkumar1 -o exomiser.yaml -b cmh003012-01 -d /analysis/projects/magnesium/GRCh38/dragen/cmh003012-01/exomiser/cmh003012-01.ped
-
