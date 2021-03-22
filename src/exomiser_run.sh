@@ -14,6 +14,7 @@ dx download "${family_vcf}"
 dx download "${ped_file}"
 dx download "${python_file}"
 dx download "${prop_file}"
+dx download "${jar_file}"
 
 #
 # SECTION: Run samtools view
@@ -35,6 +36,7 @@ echo "${family_vcf_name}"
 echo "${ped_file_name}"
 echo "${python_file_name}"
 echo "${prop_file_name}"
+echo "${jar_file_name}"
 
 echo "${python_file_name} -t ${exomiser_template_name} -v ${family_vcf_name} -p Exomiser:/out/result -o ${family_vcf_name}.yaml -b cmh003012-01 -d ${ped_file_name}"
 python3 "${python_file_name}" -t "${exomiser_template_name}" -v "${family_vcf_name}" -p "Exomiser:/out/result" -o "${family_vcf_name}.yaml" -b cmh003012-01 -d "${ped_file_name}"
@@ -43,12 +45,12 @@ python3 "${python_file_name}" -t "${exomiser_template_name}" -v "${family_vcf_na
 exomiser_yaml_id=$(dx upload "${family_vcf_name}.yaml" --brief)
 dx-jobutil-add-output exomiser_yaml "${exomiser_yaml_id}" --class=file
 
-#apt-get update -y
-#apt-get install -y default-jdk
+apt-get update -y
+apt-get install -y default-jdk
 
 
-#echo "java -Xms8g -Xmx32g -jar /usr/bin/exomiser-cli-12.1.0.jar --analysis ${family_vcf_name}.yaml --spring.config.location=${prop_file_name}"
-#java -Xms8g -Xmx32g -jar /usr/bin/exomiser-cli-12.1.0.jar --analysis "${family_vcf_name}.yaml" --spring.config.location="${prop_file_name}"
+echo "java -Xms8g -Xmx32g -jar ${jar_file_name} --analysis ${family_vcf_name}.yaml --spring.config.location=${prop_file_name}"
+java -Xms8g -Xmx32g -jar "${jar_file_name}" --analysis "${family_vcf_name}.yaml" --spring.config.location="${prop_file_name}"
 
 #bgzip -c "${input_vcf_prefix}_sorted.vcf" > "${input_vcf_prefix}_sorted.vcf.gz"
 #echo "${input_vcf_prefix}_sorted.vcf.gz"

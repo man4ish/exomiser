@@ -39,6 +39,13 @@
       "class": "file",
       "patterns": ["*.properties"],
       "help": "properties file."
+    },
+    {
+      "name": "jar_file",
+      "label": "jar file",
+      "class": "file",
+      "patterns": ["*.jar"],
+      "help": "jar file."
     }
   ],
   "outputSpec": [
